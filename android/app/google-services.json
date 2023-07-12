@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "221459330613",
+    "project_id": "ftl-finplus",
+    "storage_bucket": "ftl-finplus.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:221459330613:android:f4fc6badba466a872ca37c",
+        "android_client_info": {
+          "package_name": "com.ftl.finplus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "221459330613-7t6klg2r90gdau4lltk3t0613utrtbqb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKOEokFv5w507q2XKiQr9BY77e9_pHdYw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "221459330613-7t6klg2r90gdau4lltk3t0613utrtbqb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

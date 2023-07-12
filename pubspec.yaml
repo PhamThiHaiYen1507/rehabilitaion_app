@@ -1,0 +1,37 @@
+name: finplus
+description: Finplus
+
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.18.2 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+
+  ##internal packages
+  commons:
+    path: ./packages/commons
+  firebase_remote_config: ^3.0.14
+  firebase_core: ^2.7.1
+  connectivity_plus: ^3.0.3
+  internet_connection_checker: ^1.0.0+1
+  dio: ^4.0.6
+  cryptography_flutter: ^2.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/

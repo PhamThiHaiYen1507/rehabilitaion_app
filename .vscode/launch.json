@@ -1,0 +1,65 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "finplus",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "finplus (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "finplus (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "commons",
+            "cwd": "packages\\commons",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "commons (profile mode)",
+            "cwd": "packages\\commons",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "commons (release mode)",
+            "cwd": "packages\\commons",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "socket_cluster",
+            "cwd": "packages\\socket_cluster",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "socket_cluster (profile mode)",
+            "cwd": "packages\\socket_cluster",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "socket_cluster (release mode)",
+            "cwd": "packages\\socket_cluster",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}
