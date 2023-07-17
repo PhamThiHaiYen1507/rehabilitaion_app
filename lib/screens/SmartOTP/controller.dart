@@ -18,4 +18,10 @@ class SmartOTPController extends GetxController {
     });
     super.onReady();
   }
+
+  @override
+  void onClose() {
+    otp.dispose();
+    super.onClose();
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:commons/commons.dart';
+import 'package:finplus/routes/routes.dart';
 import 'package:finplus/screens/SignUp/controller.dart';
 import 'package:finplus/widgets/Buttom/index.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +20,8 @@ class SignUp extends StatelessWidget {
             onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
             child: Scaffold(
                 appBar: AppBar(
-                  leading:
-                      BackButtonApp(isBack: true, onPressed: () => Get.back()),
+                  leading: BackButtonApp(
+                      isBack: true, onPressed: () => Get.toNamed(Routes.login)),
                   elevation: 0,
                   title: const Text('Đăng ký'),
                   centerTitle: true,

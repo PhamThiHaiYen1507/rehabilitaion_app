@@ -113,7 +113,9 @@ abstract class BaseNetWork {
   }
 
   Future<ApiResponse<R>> sendRequest<R>(ApiRequest request,
-      {R Function(Map)? decoder, final String? baseUrl}) async {
+      {R Function(Map)? decoder,
+      final String? baseUrl,
+      dynamic Function(dynamic body)? decodeField}) async {
     dynamic undecodeData;
     int? statusCode;
     try {
@@ -166,16 +168,19 @@ abstract class BaseNetWork {
       final List<R> items = [];
 
       if (decoder != null) {
-        if (data.data is List) {
-          body = data.data;
-          items.addAll((data.data as List).map((e) => decoder(e)));
+        final bodyData = decodeField?.call(data.data) ??
+            this.decodeField(data.data) ??
+            data.data;
+
+        if (bodyData is List) {
+          body = bodyData;
+          items.addAll(bodyData.map((e) => decoder(e)));
         } else {
-          body = decoder(data.data);
+          body = decoder(bodyData);
         }
       } else {
         body = data.data;
       }
-
       return ApiResponse<R>(
         statusCode: data.statusCode,
         body: body,
@@ -304,4 +309,6 @@ abstract class BaseNetWork {
       return null;
     }
   }
+
+  dynamic decodeField(dynamic body) => null;
 }

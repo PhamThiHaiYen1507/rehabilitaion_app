@@ -5,7 +5,6 @@ import 'package:commons/commons.dart';
 import 'package:commons/os_info/os_info.dart';
 import 'package:cryptography_flutter/cryptography_flutter.dart';
 import 'package:finplus/base/network/app_connection.dart';
-import 'package:finplus/providers/login_provider.dart';
 import 'package:finplus/utils/types.dart';
 import 'package:finplus/widgets/LoadingIndicator/index.dart';
 import 'package:flutter/foundation.dart';
@@ -15,7 +14,7 @@ import 'base/app_config/app_config.dart';
 
 void showLoadingCircle() => Get.dialog(
       WillPopScope(
-        onWillPop: () async => false,
+        onWillPop: () async => true,
         child: const SizedBox.expand(
           child: Center(
             child: LoadingIndicator(),
@@ -48,7 +47,7 @@ class Global {
 
       dynamic loginData;
 
-      loginData = await LoginProvider().login(saveParams: saveParams);
+      //loginData = await LoginProvider().login(saveParams: saveParams);
     }
   }
 }

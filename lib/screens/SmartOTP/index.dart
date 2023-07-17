@@ -79,7 +79,7 @@ class SmartOTP extends StatelessWidget {
                       ),
                       Obx(
                         () => Button(
-                            onPressed: () => Get.toNamed(Routes.smart_otp),
+                            onPressed: () => Get.toNamed(Routes.createPassWord),
                             text: 'Tiếp tục',
                             enabled: c.enabled.value),
                       )
