@@ -1,0 +1,5 @@
+enum KEY {
+  LOGIN_DATA,
+  PASSWORD,
+  SAVE_LOGIN_PARAMS,
+}
