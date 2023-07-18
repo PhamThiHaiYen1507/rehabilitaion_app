@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 class BackButtonApp extends StatelessWidget {
   final bool isBack;
   final VoidCallback? onPressed;
-  const BackButtonApp(
-      {super.key, required this.isBack,  this.onPressed});
+  const BackButtonApp({super.key, required this.isBack, this.onPressed});
 
   @override
   Widget build(BuildContext context) {

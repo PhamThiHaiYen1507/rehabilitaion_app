@@ -1,6 +1,6 @@
 import 'package:commons/commons.dart';
-import 'package:finplus/routes/routes.dart';
 import 'package:finplus/screens/SignUp/controller.dart';
+import 'package:finplus/utils/utils.dart';
 import 'package:finplus/widgets/Buttom/index.dart';
 import 'package:flutter/material.dart';
 
@@ -9,21 +9,25 @@ import '../../widgets/BackButtonApp/index.dart';
 import '../../widgets/CustomTextField/index.dart';
 
 class SignUp extends StatelessWidget {
-  const SignUp({super.key});
+  final CHANGE_PASSWORD_TYPE type;
+  const SignUp({super.key, required this.type});
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SignUpController>(
-        init: SignUpController(),
+        init: SignUpController(type),
         builder: (c) {
           return GestureDetector(
             onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
             child: Scaffold(
                 appBar: AppBar(
-                  leading: BackButtonApp(
-                      isBack: true, onPressed: () => Get.toNamed(Routes.login)),
+                  leading: BackButtonApp(isBack: true, onPressed: Get.back),
                   elevation: 0,
-                  title: const Text('Đăng ký'),
+                  title: Text(type == CHANGE_PASSWORD_TYPE.SIGNUP
+                      ? 'Đăng ký'
+                      : type == CHANGE_PASSWORD_TYPE.FORGOT_PASSWORD
+                          ? 'Quên mật khẩu'
+                          : 'Đổi mật khẩu'),
                   centerTitle: true,
                 ),
                 body: Padding(
@@ -46,7 +50,8 @@ class SignUp extends StatelessWidget {
                                 hintText: 'Nhập số điện thoại',
                                 labelText: 'Số điện thoại',
                               ),
-                            )
+                            ),
+                            const SizedBox(height: 50)
                           ],
                         ),
                       ),

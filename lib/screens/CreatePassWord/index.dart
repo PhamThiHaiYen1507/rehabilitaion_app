@@ -6,25 +6,31 @@ import 'package:finplus/widgets/Buttom/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../routes/routes.dart';
 import '../../utils/svg.dart';
+import '../../utils/utils.dart';
 import '../../widgets/CustomTextField/index.dart';
 
 class CreatePassWord extends StatelessWidget {
-  const CreatePassWord({super.key});
+  final String phoneNumber;
+  final CHANGE_PASSWORD_TYPE type;
+  const CreatePassWord(
+      {super.key, required this.phoneNumber, required this.type});
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CreatePassWordController>(
-      init: CreatePassWordController(),
+      init: CreatePassWordController(phoneNumber, type),
       builder: (c) => GestureDetector(
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
         child: Scaffold(
           appBar: AppBar(
-            leading: BackButtonApp(
-                isBack: true, onPressed: () => Get.toNamed(Routes.sign_up)),
+            leading: BackButtonApp(isBack: true, onPressed: () => Get.back()),
             elevation: 0,
-            title: const Text('Tạo Mật Khẩu'),
+            title: Text(type == CHANGE_PASSWORD_TYPE.SIGNUP
+                ? 'Tạo Mật Khẩu'
+                : type == CHANGE_PASSWORD_TYPE.FORGOT_PASSWORD
+                    ? 'Quên mật khẩu'
+                    : 'Đổi mật khẩu'),
             centerTitle: true,
           ),
           body: Padding(
@@ -39,8 +45,12 @@ class CreatePassWord extends StatelessWidget {
                     obscureText: !c.showPassword.value,
                     controller: c.password,
                     focusNode: c.passwordFocus,
-                    hintText: 'Nhập mật khẩu',
-                    labelText: 'Mật khẩu',
+                    hintText: type == CHANGE_PASSWORD_TYPE.SIGNUP
+                        ? 'Nhập mật khẩu'
+                        : 'Nhập mật khẩu mới',
+                    labelText: type == CHANGE_PASSWORD_TYPE.SIGNUP
+                        ? 'Mật khẩu'
+                        : 'Mật khẩu mới',
                     inputFormatters: [
                       FilteringTextInputFormatter.deny(' '),
                     ],
@@ -68,13 +78,19 @@ class CreatePassWord extends StatelessWidget {
                     obscureText: !c.showConfirmPassword.value,
                     controller: c.confirmPassWord,
                     focusNode: c.confirmPassWordFocus,
-                    hintText: 'Nhập lại mật khẩu',
-                    labelText: 'Xác Nhận Mật khẩu',
+                    showError: c.confirmPassWordError.value != null,
+                    stringError: c.confirmPassWordError.value,
+                    hintText: type == CHANGE_PASSWORD_TYPE.SIGNUP
+                        ? 'Nhập lại mật khẩu'
+                        : 'Nhập lại mật khẩu mới',
+                    labelText: type == CHANGE_PASSWORD_TYPE.SIGNUP
+                        ? 'Xác nhận mật khẩu'
+                        : 'Xác nhận mật khẩu mới',
                     inputFormatters: [
                       FilteringTextInputFormatter.deny(' '),
                     ],
                     suffixIcon: InkWell(
-                      onTap: c.showPassword.toggle,
+                      onTap: c.showConfirmPassword.toggle,
                       child: SizedBox(
                         height: 18,
                         width: 18,
@@ -91,13 +107,14 @@ class CreatePassWord extends StatelessWidget {
                     ),
                   ),
                 ),
+                const SizedBox(height: 50),
               ])),
-               Obx(
-                        () => Button(
-                            onPressed: c.onConfirm,
-                            text: 'Tiếp tục',
-                            enabled: c.enabled.value),
-                      )
+              Obx(
+                () => Button(
+                    onPressed: c.onConfirm,
+                    text: 'Tiếp tục',
+                    enabled: c.enabled.value),
+              )
             ]),
           ),
         ),

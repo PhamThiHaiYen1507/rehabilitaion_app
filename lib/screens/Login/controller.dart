@@ -44,14 +44,12 @@ class LoginController extends GetxController {
     phoneNumberFocus.unfocus();
     passwordFocus.unfocus();
     if (Utils.validatePhoneNumber(phoneNumber.text.trim())) {
-      //showLoadingCircle();
       loginData.value = await loginProvider.login(
           phoneNumber: phoneNumber.text.trim(),
           password: password.text.trim(),
           saveParams: null);
-      //hideLoadingCircle();
       if (loginData.value != null) {
-        Get.offAllNamed(Routes.sign_up);
+        Get.offAllNamed(Routes.home);
       }
     } else {
       phoneNumberError('Số điện thoại không hợp lệ');
@@ -62,6 +60,8 @@ class LoginController extends GetxController {
   void onClose() {
     phoneNumber.dispose();
     password.dispose();
+    phoneNumberFocus.dispose();
+    passwordFocus.dispose();
     super.onClose();
   }
 }

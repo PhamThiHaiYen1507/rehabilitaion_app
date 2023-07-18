@@ -1,9 +1,10 @@
 import 'package:commons/commons.dart';
-import 'package:finplus/routes/routes.dart';
 import 'package:finplus/screens/Login/controller.dart';
+import 'package:finplus/screens/SignUp/index.dart';
 import 'package:finplus/styles/styles.dart';
 import 'package:finplus/styles/text_define.dart';
 import 'package:finplus/utils/svg.dart';
+import 'package:finplus/utils/utils.dart';
 import 'package:finplus/widgets/Buttom/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -78,10 +79,15 @@ class Login extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 10),
-                          Text(
-                            'Quên mật khẩu ?',
-                            style: TextDefine.te1_R.copyWith(color: primary03),
-                            textAlign: TextAlign.right,
+                          InkWell(
+                            onTap: () => Get.to(() => const SignUp(
+                                type: CHANGE_PASSWORD_TYPE.FORGOT_PASSWORD)),
+                            child: Text(
+                              'Quên mật khẩu ?',
+                              style:
+                                  TextDefine.te1_R.copyWith(color: primary03),
+                              textAlign: TextAlign.right,
+                            ),
                           ),
                           const SizedBox(height: 50)
                         ],
@@ -97,7 +103,8 @@ class Login extends StatelessWidget {
                         ),
                         const SizedBox(height: 5),
                         InkWell(
-                          onTap: () => Get.toNamed(Routes.sign_up),
+                          onTap: () => Get.to(() =>
+                              const SignUp(type: CHANGE_PASSWORD_TYPE.SIGNUP)),
                           child: Text.rich(TextSpan(
                               style: TextDefine.t2_R.copyWith(color: neutral00),
                               text: 'Bạn chưa có tài khoản? ',

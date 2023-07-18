@@ -243,7 +243,7 @@ class StyleConfigs {
               fontWeight: FontWeight.w500,
               fontFamily: 'Quicksand',
             ),
-            backgroundColor: primary01)),
+            backgroundColor: primary03)),
     dividerTheme: const DividerThemeData(color: neutral05),
   );
 }

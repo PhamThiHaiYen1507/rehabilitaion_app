@@ -30,7 +30,7 @@ class LoginProvider extends BaseNetWork {
     }
   }
 
-  Future<bool> checkPhoneNumber({
+  Future<bool?> checkPhoneNumber({
     String? phoneNumber,
   }) async {
     final params = {
@@ -49,6 +49,28 @@ class LoginProvider extends BaseNetWork {
       return res.body['data'];
     } else {
       res.showError('checkPhoneNumber');
+      return null;
+    }
+  }
+
+  Future<bool> createPassWord({String? phoneNumber, String? password}) async {
+    final params = {
+      'phoneNumber': phoneNumber,
+      'password': password,
+    }.json;
+
+    final ApiRequest req = ApiRequest(
+      path: ApiPath.users,
+      method: METHOD.PUT,
+      auth: true,
+      body: params,
+    );
+
+    final res = await sendRequest(req);
+    if (res.success) {
+      return true;
+    } else {
+      res.showError('Mật khẩu');
       return false;
     }
   }
