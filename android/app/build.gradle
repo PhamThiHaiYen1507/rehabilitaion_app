@@ -43,7 +43,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "ftl.mts.finplus"
+        applicationId "hust.pthy.healthhub"
         minSdkVersion 21
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()

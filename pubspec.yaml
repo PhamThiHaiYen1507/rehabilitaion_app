@@ -21,7 +21,7 @@ dependencies:
   firebase_core: ^2.7.1
   connectivity_plus: ^3.0.3
   internet_connection_checker: ^1.0.0+1
-  dio: ^4.0.6
+  dio: 5.1.0
   cryptography_flutter: ^2.2.0
   pinput: ^2.2.16
 dev_dependencies:

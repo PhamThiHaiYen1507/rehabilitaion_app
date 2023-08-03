@@ -68,10 +68,11 @@ class Login extends StatelessWidget {
                                   child: Center(
                                     child: c.showPassword.value
                                         ? Icon(Icons.remove_red_eye_outlined,
-                                            color: theme.neutral00)
+                                            color: theme.primary03)
                                         : SvgPicture.asset(
                                             SvgIcon.hide_password,
                                             height: 18,
+                                            color: theme.primary03,
                                           ),
                                   ),
                                 ),

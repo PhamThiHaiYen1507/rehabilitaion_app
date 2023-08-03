@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:commons/app_logger/app_logger.dart';
 import 'package:commons/commons.dart';
 import 'package:commons/os_info/os_info.dart';
@@ -14,18 +12,18 @@ import 'base/app_config/app_config.dart';
 
 void showLoadingCircle() => Get.dialog(
       WillPopScope(
-        onWillPop: () async => true,
+        onWillPop: () async => false,
         child: const SizedBox.expand(
           child: Center(
             child: LoadingIndicator(),
           ),
         ),
       ),
-      barrierDismissible: false,
+      barrierDismissible: true,
       routeSettings: const RouteSettings(name: 'loading'),
     );
 
-void hideLoadingCircle() => Get.back(result: false);
+void hideLoadingCircle() => Get.back(result: false, closeOverlays: true);
 
 class Global {
   static Future<void> initial() async {
@@ -43,10 +41,6 @@ class Global {
     final String? params =
         Storage.get<String>(KEY.SAVE_LOGIN_PARAMS.toString());
     if (params != null && params.isNotEmpty) {
-      final saveParams = json.decode(params);
-
-      dynamic loginData;
-
       //loginData = await LoginProvider().login(saveParams: saveParams);
     }
   }

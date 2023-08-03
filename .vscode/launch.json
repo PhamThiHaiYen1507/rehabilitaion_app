@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "finplus",
+            "name": "HealthHub",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "finplus (profile mode)",
+            "name": "HealthHub (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "finplus (release mode)",
+            "name": "HealthHub (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

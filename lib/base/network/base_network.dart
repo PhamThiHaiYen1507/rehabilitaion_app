@@ -1,10 +1,12 @@
 // ignore_for_file: constant_identifier_names
 
 import 'dart:async';
+import 'dart:io';
 
 import 'package:commons/app_logger/app_logger.dart';
 import 'package:commons/commons.dart' hide Response;
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:finplus/base/app_config/app_config.dart';
 import 'package:finplus/base/network/app_connection.dart';
 import 'package:finplus/utils/app_logger.dart';
@@ -24,6 +26,14 @@ class _Dio {
 
   _Dio._internal() {
     instance = Dio();
+    (instance.httpClientAdapter as IOHttpClientAdapter).onHttpClientCreate =
+        _onHttpClientCreate;
+  }
+
+  static HttpClient? _onHttpClientCreate(HttpClient dioClient) {
+    dioClient.badCertificateCallback =
+        (X509Certificate cert, String host, int port) => true;
+    return dioClient;
   }
 }
 
@@ -146,8 +156,8 @@ abstract class BaseNetWork {
             'auth': request.auth,
             'disableRetry': request.method != METHOD.GET
           },
-          sendTimeout: 3000,
-          receiveTimeout: 30000,
+          sendTimeout: const Duration(milliseconds: 3000),
+          receiveTimeout: const Duration(milliseconds: 3000),
         ),
       );
 
@@ -285,18 +295,10 @@ abstract class BaseNetWork {
 
   String? get _accessToken {
     return null;
-
-    // final LoginInfoData? user =
-    //     Storage.get(KEY.USER_INFO, LoginInfoData.fromJson);
-    // if (user != null) {
-    //   return 'Bearer ${user.accessToken}';
-    // } else {
-    //   return null;
-    // }
   }
 
   bool _checkNeedRetry(DioError e) {
-    return e.type == DioErrorType.other && !AppConnection.hasConnection;
+    return e.type == DioErrorType.unknown && !AppConnection.hasConnection;
   }
 
   Future<Response?> _handleRetry(RequestOptions requestOptions) async {

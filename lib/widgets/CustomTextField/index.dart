@@ -57,8 +57,9 @@ class CustomTextField extends StatelessWidget {
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.all(16),
             isDense: true,
-            hintText: hintText,
+            //hintText: hintText,
             labelText: labelText,
+            labelStyle: TextStyle(color: theme.primary03),
             errorText: haveErr ? '' : null,
             errorStyle: const TextStyle(height: 0),
             errorMaxLines: 1,
@@ -74,36 +75,36 @@ class CustomTextField extends StatelessWidget {
                 : null,
             suffixIcon: suffixIcon,
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(4),
-              borderSide: BorderSide(width: 1, color: theme.neutral00),
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(width: 1, color: theme.primary03),
             ),
             disabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
-                borderSide: BorderSide(width: 1, color: theme.neutral00)),
+                borderRadius: BorderRadius.circular(16),
+                borderSide: BorderSide(width: 1, color: theme.primary03)),
             enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
-                borderSide: BorderSide(width: 1, color: theme.neutral00)),
+                borderRadius: BorderRadius.circular(16),
+                borderSide: BorderSide(width: 1, color: theme.primary03)),
             focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
-                borderSide: BorderSide(width: 1, color: theme.primary04)),
+                borderRadius: BorderRadius.circular(16),
+                borderSide: BorderSide(width: 2, color: theme.primary04)),
             errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
+                borderRadius: BorderRadius.circular(16),
                 borderSide: BorderSide(width: 1, color: theme.error04)),
             focusedErrorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
+                borderRadius: BorderRadius.circular(16),
                 borderSide: BorderSide(width: 1, color: theme.error04)),
           ),
         ),
         if (haveErr && showError)
           Padding(
-            padding: const EdgeInsets.only(top: 8),
+            padding: const EdgeInsets.only(top: 16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Icon(Icons.error_outline, color: theme.error04),
                 const SizedBox(
-                  width: 4,
+                  width: 16,
                 ),
                 Flexible(
                   child: Text(

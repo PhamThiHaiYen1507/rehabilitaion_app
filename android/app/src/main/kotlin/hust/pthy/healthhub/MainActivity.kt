@@ -1,4 +1,4 @@
-package com.example.finplus
+package hust.pthy.healthhub
 
 import io.flutter.embedding.android.FlutterActivity
 
