@@ -24,6 +24,7 @@ dependencies:
   dio: 5.1.0
   cryptography_flutter: ^2.2.0
   pinput: ^2.2.16
+  flutter_native_splash: ^2.2.19
 dev_dependencies:
   flutter_test:
     sdk: flutter
