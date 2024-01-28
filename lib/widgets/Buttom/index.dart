@@ -40,9 +40,21 @@ class Button extends StatelessWidget {
         onTap: enabled ? onPressed : null,
         child: Container(
             decoration: BoxDecoration(
-              color: !enabled
-                  ? disableColor ?? theme.primary05
-                  : backgroundColor ?? theme.primary04,
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                // ignore: use_named_constants
+                end: const Alignment(1, 1),
+                colors: enabled
+                    ? <Color>[
+                        const Color(0xffE9A237),
+                        const Color(0xff9A0000),
+                      ]
+                    : <Color>[
+                        const Color(0xffE9A237).withOpacity(0.5),
+                        const Color(0xff9A0000).withOpacity(0.5),
+                      ],
+                tileMode: TileMode.mirror,
+              ),
               borderRadius: borderRadius ?? BorderRadius.circular(100),
             ),
             child: fullWidth == true
