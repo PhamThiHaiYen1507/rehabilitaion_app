@@ -15,7 +15,7 @@ import 'message_option.dart';
 import 'my_message.dart';
 
 class MessagesScreen extends StatefulWidget {
-  final String roomId;
+  final int roomId;
 
   const MessagesScreen({
     super.key,
@@ -91,19 +91,19 @@ class _MessagesScreenState extends State<MessagesScreen> {
             bottomOpacity: 1,
             // backgroundColor: AppColors.white,
             titleSpacing: -8,
-            title: Obx(() => Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      c.roomInfo?.name ?? '',
-                      style: const TextStyle(
-                        fontSize: 14,
-                        height: 1.5,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                )),
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                // Text(
+                //   c.roomInfo?.name ?? '',
+                //   style: const TextStyle(
+                //     fontSize: 14,
+                //     height: 1.5,
+                //     fontWeight: FontWeight.w600,
+                //   ),
+                // ),
+              ],
+            ),
           ),
           body: Column(
             children: [
@@ -139,7 +139,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                                 nextMessage: nextMessage,
                                 previousMessage: previousMessage,
                                 message: message,
-                                showAvatar: c.roomInfo?.isGroup == true,
+                                // showAvatar: c.roomInfo?.isGroup == true,
                               ),
                             ),
                           );

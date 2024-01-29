@@ -24,21 +24,21 @@ class ChatRepositoryImpl extends ChatRepository {
 
   final ApiClient _client = ApiClientImpl();
 
-  @override
-  Future<ApiResponseData<RoomModel?>> createRoom({dynamic params}) async {
-    try {
-      final res = await _client.createRoom(params);
-      final room = res.getBody(RoomData.fromJson, fromKey: 'data');
+  // @override
+  // Future<ApiResponseData<RoomModel?>> createRoom({dynamic params}) async {
+  //   try {
+  //     final res = await _client.createRoom(params);
+  //     final room = res.getBody(RoomData.fromJson, fromKey: 'data');
 
-      if (room != null) {
-        return Right(room.toRoomModel());
-      } else {
-        throw Exception();
-      }
-    } catch (e) {
-      return Left(ApiException());
-    }
-  }
+  //     if (room != null) {
+  //       return Right(room.toRoomModel());
+  //     } else {
+  //       throw Exception();
+  //     }
+  //   } catch (e) {
+  //     return Left(ApiException());
+  //   }
+  // }
 
   @override
   Future<ApiResponseData<List<RoomModel>?>> getRooms({
@@ -54,7 +54,7 @@ class ChatRepositoryImpl extends ChatRepository {
       }
 
       final rooms = res.getItems(RoomData.fromJson)?.map<RoomModel>((e) {
-            return e.toRoomModel();
+            return e.toRoomModel(user.isDoctor);
           }).toList() ??
           [];
 

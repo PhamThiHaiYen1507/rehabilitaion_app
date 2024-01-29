@@ -1,14 +1,11 @@
-import 'dart:io';
-
 import 'package:commons/commons.dart';
-import 'package:finplus/core/utils/background_uploader/background_uploader.dart';
 import 'package:finplus/layers/domain/entities/message_model.dart';
 import 'package:finplus/layers/domain/entities/room_model.dart';
 import 'package:finplus/layers/domain/repository/chat_repository.dart';
 import 'package:flutter/material.dart';
 
 class MessagesController extends GetxController {
-  final String roomId;
+  final int roomId;
 
   final ChatRepository _chatRepository;
 
@@ -16,7 +13,7 @@ class MessagesController extends GetxController {
 
   late final FocusNode messageInputFocusNode;
 
-  late final Rx<List<MessageModel>> _messages;
+  final Rx<List<MessageModel>> _messages = Rx([]);
 
   List<MessageModel> get messages => _messages.value;
 
@@ -36,7 +33,7 @@ class MessagesController extends GetxController {
     this._chatRepository,
     this.roomId,
   ) : super() {
-    _messages = Rx(BackgroundUploader().getSendingMessageWithRoomId(roomId));
+    // _messages = Rx(BackgroundUploader().getSendingMessageWithRoomId(roomId));
   }
 
   @override
@@ -152,16 +149,16 @@ class MessagesController extends GetxController {
   }
 
   Future<void> _loadMessages() async {
-    final res = await _chatRepository.getMessages(id: roomId, page: page);
+    // final res = await _chatRepository.getMessages(id: roomId, page: page);
 
-    res.map((right) {
-      page++;
-      if (right != null) {
-        _handleResponseMessageData(right);
+    // res.map((right) {
+    //   page++;
+    //   if (right != null) {
+    //     _handleResponseMessageData(right);
 
-        hasMore = right.length >= 20;
-      }
-    });
+    //     hasMore = right.length >= 20;
+    //   }
+    // });
   }
 
   void _handleResponseMessageData(List<MessageModel> value) {
@@ -185,30 +182,30 @@ class MessagesController extends GetxController {
       final content = messageInput.text;
       messageInput.clear();
 
-      _onSendMessage(content: content);
+      // _onSendMessage(content: content);
     }
   }
 
-  Future<void> _onSendMessage({
-    final String? content,
-    final File? image,
-    final File? audio,
-    final String? sticker,
-  }) async {
-    final res = await _chatRepository.sendMessage(
-      roomId,
-      content,
-      image: image,
-      audio: audio,
-      sticker: sticker,
-    );
+  // Future<void> _onSendMessage({
+  //   final String? content,
+  //   final File? image,
+  //   final File? audio,
+  //   final String? sticker,
+  // }) async {
+  //   // final res = await _chatRepository.sendMessage(
+  //   //   roomId,
+  //   //   content,
+  //   //   image: image,
+  //   //   audio: audio,
+  //   //   sticker: sticker,
+  //   // );
 
-    res.map((right) {
-      if (right != null) {
-        _handleResponseMessageData([right]);
-      }
-    });
-  }
+  //   // res.map((right) {
+  //   //   if (right != null) {
+  //   //     _handleResponseMessageData([right]);
+  //   //   }
+  //   // });
+  // }
 
   // Future<void> _onSendSticker(
   //     SendStickerMessageEvent event, MessagesEmitter emit) async {

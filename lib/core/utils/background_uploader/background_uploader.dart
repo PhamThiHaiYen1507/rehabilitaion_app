@@ -89,10 +89,10 @@ class BackgroundUploader {
     });
   }
 
-  List<MessageModel> getSendingMessageWithRoomId(String roomId) => _info.entries
-      .where((element) => element.value.sendingInfo.roomId == roomId)
-      .map((e) => e.value.sendingInfo)
-      .toList();
+  // List<MessageModel> getSendingMessageWithRoomId(int roomId) => _info.entries
+  //     .where((element) => element.value.sendingInfo.roomId == roomId)
+  //     .map((e) => e.value.sendingInfo)
+  //     .toList();
 
   SendingMessageInfo? getSendingMessage(String id) => _info[id];
 

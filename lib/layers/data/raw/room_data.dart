@@ -1,59 +1,37 @@
+import 'package:finplus/layers/data/raw/patient_data.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../domain/entities/room_model.dart';
-import 'message_data.dart';
-import 'room_info_data.dart';
-import 'room_owner_data.dart';
+import 'doctor_data.dart';
 
 part 'room_data.g.dart';
 
 @JsonSerializable()
 class RoomData {
-  RoomData({this.sId});
+  RoomData({
+    required this.id,
+    required this.createdAt,
+    this.patient,
+    this.doctor,
+  });
 
-  @JsonKey(name: '_id')
-  String? sId;
+  final int id;
 
-  @JsonKey(name: 'user_chat_id')
-  String? userChatId;
+  final String? createdAt;
 
-  String? type;
+  final PatientData? patient;
 
-  String? createdById;
-
-  DateTime? createdAt;
-
-  DateTime? updatedAt;
-
-  @JsonKey(name: 'user_chat')
-  RoomInfoData? userChat;
-
-  @JsonKey(name: 'lastMessage')
-  MessageData? lastMessage;
-
-  int? countMessagesUnseen;
-
-  RoomOwnerData? owner;
-
-  @JsonKey(name: 'to')
-  RoomOwnerData? toData;
+  final DoctorData? doctor;
 
   Map<String, dynamic> toJson() => _$RoomDataToJson(this);
 
   factory RoomData.fromJson(Map<String, dynamic> json) =>
       _$RoomDataFromJson(json);
 
-  RoomModel toRoomModel() => RoomModel(
-        id: userChatId ?? '',
-        createdById: createdById ?? '',
-        createdAt: createdAt ?? DateTime.now(),
-        lastMessage: lastMessage?.toMessagesModel(),
-        countMessagesUnseen: countMessagesUnseen ?? 0,
-        updatedAt: userChat?.updatedAt ?? updatedAt ?? DateTime.now(),
-        users: [],
-        name: toData?.fullName ?? owner?.fullName,
-        avatar:
-            toData?.avatar?.isNotEmpty == true ? toData?.avatar : owner?.avatar,
-        isGroup: toData?.objectType == 'GROUP',
+  RoomModel toRoomModel(bool isDoctor) => RoomModel(
+        id: id,
+        createdAt: createdAt ?? '',
+        name: isDoctor ? (patient?.name ?? '') : (doctor?.name ?? ''),
+        avatar: isDoctor ? (patient?.avatar ?? '') : (doctor?.avatar ?? ''),
       );
 }

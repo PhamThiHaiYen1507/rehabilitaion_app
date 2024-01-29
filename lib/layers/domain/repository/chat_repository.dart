@@ -11,7 +11,7 @@ abstract class ChatRepository {
     required UserModel user,
   });
 
-  Future<ApiResponseData<RoomModel?>> createRoom({dynamic params});
+  // Future<ApiResponseData<RoomModel?>> createRoom({dynamic params});
 
   Future<ApiResponseData<List<MessageModel>?>> getMessages({
     required String id,

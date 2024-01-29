@@ -1,4 +1,6 @@
 // ignore_for_file: unused_import
+import 'package:finplus/layers/data/raw/doctor_data.dart';
+import 'package:finplus/layers/data/raw/patient_data.dart';
 import 'package:floor_annotation/floor_annotation.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -9,38 +11,21 @@ part 'room_model.g.dart';
 
 @JsonSerializable()
 class RoomModel {
-  @primaryKey
-  final String id;
+  final int id;
 
-  final String createdById;
+  final String createdAt;
 
-  final DateTime createdAt;
+  final String name;
 
-  final DateTime updatedAt;
+  final String avatar;
 
-  MessageModel? lastMessage;
-
-  String? name;
-
-  int countMessagesUnseen;
-
-  String? avatar;
-
-  final bool isGroup;
-
-  final List<UserModel> users;
+  bool isDoctor = false;
 
   RoomModel({
     required this.id,
-    required this.createdById,
     required this.createdAt,
-    required this.updatedAt,
-    required this.users,
-    this.avatar,
-    required this.countMessagesUnseen,
-    this.lastMessage,
     required this.name,
-    required this.isGroup,
+    required this.avatar,
   });
 
   factory RoomModel.fromJson(dynamic json) => _$RoomModelFromJson(json);

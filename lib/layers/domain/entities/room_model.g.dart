@@ -7,29 +7,16 @@ part of 'room_model.dart';
 // **************************************************************************
 
 RoomModel _$RoomModelFromJson(Map<String, dynamic> json) => RoomModel(
-      id: json['id'] as String,
-      createdById: json['createdById'] as String,
-      createdAt: DateTime.parse(json['createdAt'] as String),
-      updatedAt: DateTime.parse(json['updatedAt'] as String),
-      users: (json['users'] as List<dynamic>).map(UserModel.fromJson).toList(),
-      avatar: json['avatar'] as String?,
-      countMessagesUnseen: json['countMessagesUnseen'] as int,
-      lastMessage: json['lastMessage'] == null
-          ? null
-          : MessageModel.fromJson(json['lastMessage'] as Map<String, dynamic>),
-      name: json['name'] as String?,
-      isGroup: json['isGroup'] as bool,
-    );
+      id: json['id'] as int,
+      createdAt: json['createdAt'] as String,
+      name: json['name'] as String,
+      avatar: json['avatar'] as String,
+    )..isDoctor = json['isDoctor'] as bool;
 
 Map<String, dynamic> _$RoomModelToJson(RoomModel instance) => <String, dynamic>{
       'id': instance.id,
-      'createdById': instance.createdById,
-      'createdAt': instance.createdAt.toIso8601String(),
-      'updatedAt': instance.updatedAt.toIso8601String(),
-      'lastMessage': instance.lastMessage,
+      'createdAt': instance.createdAt,
       'name': instance.name,
-      'countMessagesUnseen': instance.countMessagesUnseen,
       'avatar': instance.avatar,
-      'isGroup': instance.isGroup,
-      'users': instance.users,
+      'isDoctor': instance.isDoctor,
     };
