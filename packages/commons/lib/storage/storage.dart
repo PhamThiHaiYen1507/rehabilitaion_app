@@ -13,7 +13,7 @@ abstract class _IStorage {
 
   void putList<T>(dynamic key, T value);
 
-  T? get<T>(dynamic key, [T Function(Map data)? decoder]);
+  T? get<T>(dynamic key, [T Function(Map<String, dynamic> data)? decoder]);
 
   List<T>? getList<T>(dynamic key, [T Function(Map data)? decoder]);
 
@@ -59,7 +59,8 @@ class Storage {
     _instance!._storage.putList(key, value);
   }
 
-  static T? get<T>(dynamic key, [T Function(Map data)? decoder]) {
+  static T? get<T>(dynamic key,
+      [T Function(Map<String, dynamic> data)? decoder]) {
     assert(_instance != null, 'You must be call "init" method');
     return _instance!._storage.get(key, decoder);
   }
@@ -84,21 +85,21 @@ class MobileStorage extends _IStorage {
   }
 
   @override
-  T? get<T>(key, [T Function(Map data)? decoder]) {
-    try {
-      final data = box.get(key.toString());
+  T? get<T>(key, [T Function(Map<String, dynamic> data)? decoder]) {
+    // try {
+    final data = box.get(key.toString());
 
-      if (decoder != null && data != null) {
-        return decoder(json.decode(data));
-      } else {
-        return data;
-      }
-    } catch (_) {
-      if (kDebugMode) {
-        print(_);
-      }
-      return null;
+    if (decoder != null && data != null) {
+      return decoder(json.decode(data));
+    } else {
+      return data;
     }
+    // } catch (_) {
+    //   if (kDebugMode) {
+    //     print(_);
+    //   }
+    //   return null;
+    // }
   }
 
   @override
@@ -155,9 +156,10 @@ class MobileStorage extends _IStorage {
       if (value is ExtendModel) {
         box.put(key.toString(), json.encode(value.toJson()));
       } else {
-        box.put(key.toString(), value);
+        box.put(key.toString(), json.encode((value as dynamic).toJson()));
       }
     } catch (_) {
+      box.put(key, value);
       if (kDebugMode) {
         print(_);
       }
@@ -190,7 +192,7 @@ class _WebStorage extends _IStorage {
   }
 
   @override
-  T? get<T>(key, [T Function(Map data)? decoder]) {
+  T? get<T>(key, [T Function(Map<String, dynamic> data)? decoder]) {
     try {
       final dynamic data = pref.getString(key.toString());
 

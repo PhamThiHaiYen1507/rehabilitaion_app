@@ -24,16 +24,20 @@ class TextDefine {
   /// fontSize: 13 fontWeight: FontWeight.w700
   static const TextStyle te1_B =
       TextStyle(fontSize: 13, fontWeight: FontWeight.w700);
+
+  /// fontSize: 13 fontWeight: FontWeight.w500
   static const TextStyle te1_R =
       TextStyle(fontSize: 13, fontWeight: FontWeight.w500);
 
-  /// fontSize: 13 fontWeight: FontWeight.w700
+  /// fontSize: 10 fontWeight: FontWeight.w600
   static const TextStyle te2_M =
       TextStyle(fontSize: 10, fontWeight: FontWeight.w600);
+
+  /// fontSize: 10 fontWeight: FontWeight.w500
   static const TextStyle te2_R =
       TextStyle(fontSize: 10, fontWeight: FontWeight.w500);
 
-  /// fontSize: 13 fontWeight: FontWeight.w700
+  /// fontSize: 8 fontWeight: FontWeight.w500
   static const TextStyle te3_R =
       TextStyle(fontSize: 8, fontWeight: FontWeight.w500);
 }

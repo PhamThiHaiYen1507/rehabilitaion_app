@@ -2,6 +2,7 @@ import 'package:commons/commons.dart';
 import 'package:finplus/app/app_bindings.dart';
 import 'package:finplus/routes/routes.dart';
 import 'package:finplus/styles/styles.dart';
+import 'package:finplus/utils/types.dart';
 import 'package:flutter/material.dart';
 
 class Healhub extends StatelessWidget {
@@ -15,7 +16,8 @@ class Healhub extends StatelessWidget {
       themeMode: ThemeMode.light,
       initialBinding: AppBindings(),
       getPages: AppNavigate.screens,
-      initialRoute: Routes.login,
+      initialRoute:
+          Storage.get(KEY.LOGIN_DATA) != null ? Routes.home : Routes.login,
     );
   }
 }

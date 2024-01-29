@@ -1,6 +1,7 @@
 import 'package:commons/commons.dart';
-import 'package:finplus/screens/Home/index.dart';
-import 'package:finplus/screens/login/index.dart';
+
+import '../layers/presentation/home/index.dart';
+import '../layers/presentation/login/index.dart';
 
 class Routes {
   static const String login = '/login';
