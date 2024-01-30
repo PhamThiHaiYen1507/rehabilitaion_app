@@ -17,8 +17,9 @@ class _SendingMessageState extends State<SendingMessage> {
   StreamController<num>? streamController;
   @override
   void initState() {
-    streamController =
-        BackgroundUploader().getSendingMessage(widget.messsage.sId)?.stream;
+    streamController = BackgroundUploader()
+        .getSendingMessage(widget.messsage.id.toString())
+        ?.stream;
 
     super.initState();
   }

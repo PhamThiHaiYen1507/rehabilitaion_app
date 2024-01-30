@@ -8,8 +8,8 @@ part 'message_data.g.dart';
 
 @JsonSerializable()
 class MessageData {
-  @JsonKey(name: '_id')
-  final String sId;
+  @JsonKey(name: 'id')
+  final int id;
 
   @JsonKey(name: 'user_id')
   final String userId;
@@ -40,7 +40,7 @@ class MessageData {
   final UserData? ownerProfile;
 
   MessageData({
-    required this.sId,
+    required this.id,
     required this.userId,
     required this.ownerId,
     this.createdAt,
@@ -76,7 +76,7 @@ class MessageData {
     }
 
     return MessageModel(
-        sId: sId,
+        id: id,
         roomId: userId,
         createdAt: DateTime.tryParse(createdAt ?? '') ?? DateTime.now(),
         updatedAt: DateTime.tryParse(updatedAt ?? ''),

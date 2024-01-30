@@ -46,9 +46,9 @@ class BackgroundUploader {
     final newMessage = MessageModel.randomId(roomId, 'userId');
 
     _queue.add(
-      () => _sendFile(roomId, content, newMessage.sId, file, serverFolder,
-          fileType, newMessage),
-      newMessage.sId,
+      () => _sendFile(roomId, content, newMessage.id.toString(), file,
+          serverFolder, fileType, newMessage),
+      newMessage.id.toString(),
     );
 
     return newMessage;

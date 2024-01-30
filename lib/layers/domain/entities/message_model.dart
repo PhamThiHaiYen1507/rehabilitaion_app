@@ -1,6 +1,5 @@
 import 'package:html/parser.dart' show parse;
 import 'package:json_annotation/json_annotation.dart';
-import 'package:uuid/uuid.dart';
 
 import 'message_place_model.dart';
 import 'user_model.dart';
@@ -9,8 +8,7 @@ part 'message_model.g.dart';
 
 @JsonSerializable()
 class MessageModel {
-
-  late final String sId;
+  late final int id;
 
   late final String roomId;
 
@@ -54,10 +52,10 @@ class MessageModel {
 
   bool get onlyMedia => files.isNotEmpty && isContentEmpty;
 
-  bool get isSending => sId.contains('sending-message');
+  bool get isSending => false;
 
   MessageModel({
-    required this.sId,
+    required this.id,
     required this.roomId,
     required this.createdAt,
     this.updatedAt,
@@ -71,7 +69,7 @@ class MessageModel {
   });
 
   MessageModel.randomId(this.roomId, this.userId, [this.user]) {
-    sId = '${const Uuid().v4()}-sending-message';
+    id = 0;
     createdAt = DateTime.now();
     updatedAt = null;
     fileMain = null;

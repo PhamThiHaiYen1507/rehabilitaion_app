@@ -71,12 +71,10 @@ class ChatRepositoryImpl extends ChatRepository {
 
   @override
   Future<ApiResponseData<List<MessageModel>?>> getMessages({
-    required String id,
-    int page = 1,
-    int limit = 20,
+    required int roomId,
   }) async {
     try {
-      final res = await _client.getMessages(id, page, limit);
+      final res = await _client.getMessages(roomId);
 
       final data = res
           .getItems(MessageData.fromJson)
@@ -85,9 +83,7 @@ class ChatRepositoryImpl extends ChatRepository {
 
       return Right(data);
     } on Exception {
-      if (page == 1) {
-        Left(ApiException());
-      }
+      Left(ApiException());
 
       return Left(ApiException());
     }

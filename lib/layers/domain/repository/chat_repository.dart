@@ -14,9 +14,9 @@ abstract class ChatRepository {
   // Future<ApiResponseData<RoomModel?>> createRoom({dynamic params});
 
   Future<ApiResponseData<List<MessageModel>?>> getMessages({
-    required String id,
-    int page = 1,
-    int limit = 20,
+    required int roomId,
+    // int page = 1,
+    // int limit = 20,
   });
 
   Future<ApiResponseData<List<MessageModel>?>> getMessagesFromLastMessage(

@@ -7,9 +7,9 @@ part of 'message_data.dart';
 // **************************************************************************
 
 MessageData _$MessageDataFromJson(Map<String, dynamic> json) => MessageData(
-      sId: json['_id'] as String,
-      userId: json['user_id'] as String,
-      ownerId: json['owner_id'] as String,
+      id: json['id'] as int,
+      userId: '',
+      ownerId: '',
       createdAt: json['createdAt'] as String?,
       fileMain: json['file_main'] == null
           ? null
@@ -30,7 +30,7 @@ MessageData _$MessageDataFromJson(Map<String, dynamic> json) => MessageData(
 
 Map<String, dynamic> _$MessageDataToJson(MessageData instance) =>
     <String, dynamic>{
-      '_id': instance.sId,
+      'id': instance.id,
       'user_id': instance.userId,
       'owner_id': instance.ownerId,
       'createdAt': instance.createdAt,

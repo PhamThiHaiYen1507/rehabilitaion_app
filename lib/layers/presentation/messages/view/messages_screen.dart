@@ -6,6 +6,7 @@ import 'package:commons/commons.dart';
 import 'package:finplus/layers/data/repository/chat_repository_impl.dart';
 import 'package:finplus/layers/presentation/messages/controller/messages_controller.dart';
 import 'package:finplus/layers/presentation/widgets/selection_overlay/selection_overlay.dart';
+import 'package:finplus/styles/styles.dart';
 import 'package:finplus/utils/svg.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -66,47 +67,59 @@ class _MessagesScreenState extends State<MessagesScreen> {
       init: MessagesController(ChatRepositoryImpl(), widget.roomId),
       builder: (c) => GestureDetector(
         child: Scaffold(
-          appBar: AppBar(
-            actions: const [
-              // Container(
-              //     padding: const EdgeInsets.symmetric(horizontal: 8),
-              //     child: GestureDetector(
-              //       onTap: () {},
-              //       child: SvgIcon.phone.icon,
-              //     )),
-              // Container(
-              //     // Set the desired width of the IconButton
-              //     padding: const EdgeInsets.symmetric(horizontal: 5),
-              //     child: GestureDetector(
-              //       onTap: () {},
-              //       child: SvgIcon.video.icon,
-              //     )),
-              // Container(
-              //     padding: const EdgeInsets.symmetric(horizontal: 8),
-              //     child: GestureDetector(
-              //       onTap: () {},
-              //       child: SvgIcon.system_menu.icon,
-              //     )),
-            ],
-            bottomOpacity: 1,
-            // backgroundColor: AppColors.white,
-            titleSpacing: -8,
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                // Text(
-                //   c.roomInfo?.name ?? '',
-                //   style: const TextStyle(
-                //     fontSize: 14,
-                //     height: 1.5,
-                //     fontWeight: FontWeight.w600,
-                //   ),
-                // ),
-              ],
-            ),
-          ),
           body: Column(
             children: [
+              Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                      colors: [Color(0xffE9A237), Color(0xff9A0000)]),
+                ),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 30),
+                    Row(
+                      children: [
+                        BackButton(color: theme.neutral10),
+                        Expanded(
+                            child: Obx(
+                          () => Text(
+                            c.roomInfo?.name ?? '',
+                            style: TextStyle(
+                              color: theme.neutral10,
+                              fontSize: 14,
+                              height: 1.5,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        )),
+                        Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: GestureDetector(
+                              onTap: () {},
+                              child: Icon(Icons.phone, color: theme.neutral10),
+                            )),
+                        Container(
+
+                            // Set the desired width of the IconButton
+
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            child: GestureDetector(
+                              onTap: () {},
+                              child: Icon(Icons.video_call,
+                                  color: theme.neutral10),
+                            )),
+                        Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: GestureDetector(
+                              onTap: () {},
+                              child: Icon(Icons.more_horiz,
+                                  color: theme.neutral10),
+                            )),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
               Expanded(
                 child: Obx(
                   () => SmartRefresher(
@@ -128,21 +141,21 @@ class _MessagesScreenState extends State<MessagesScreen> {
                         final previousMessage =
                             i - 1 >= 0 ? c.messages[i - 1] : null;
 
-                        if (message.userId != userId)
-                          return Align(
-                            alignment: Alignment.centerLeft,
-                            child: WidgetSelectionOverlay(
-                              onLeft: true,
-                              option: const MessageOption(),
-                              optionHeight: 170,
-                              child: FriendMessage(
-                                nextMessage: nextMessage,
-                                previousMessage: previousMessage,
-                                message: message,
-                                // showAvatar: c.roomInfo?.isGroup == true,
-                              ),
+                        //if (message.userId != userId)
+                        return Align(
+                          alignment: Alignment.centerLeft,
+                          child: WidgetSelectionOverlay(
+                            onLeft: true,
+                            option: const MessageOption(),
+                            optionHeight: 170,
+                            child: FriendMessage(
+                              nextMessage: nextMessage,
+                              previousMessage: previousMessage,
+                              message: message,
+                              // showAvatar: c.roomInfo?.isGroup == true,
                             ),
-                          );
+                          ),
+                        );
 
                         return Align(
                           alignment: Alignment.centerRight,

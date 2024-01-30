@@ -33,12 +33,8 @@ abstract class ApiClient {
     @Body() dynamic params,
   );
 
-  @GET('/api/posts/by-user/{id}?ref_type=message')
-  Future<BaseResponse> getMessages(
-    @Path() final String id,
-    @Query('page') int page,
-    @Query('limit') int limit,
-  );
+  @GET('/api/v1/chatDetail')
+  Future<BaseResponse> getMessages(@Query('roomId') int roomId);
 
   @GET('/api/posts/by-user/{id}?ref_type=message&order=1')
   Future<BaseResponse> getMessagesFromLastMessage(
@@ -71,8 +67,7 @@ class ApiClientImpl implements ApiClient {
   }
 
   @override
-  Future<BaseResponse> getMessages(String id, int page, int limit) =>
-      _client.getMessages(id, page, limit);
+  Future<BaseResponse> getMessages(int roomId) => _client.getMessages(roomId);
 
   @override
   Future<BaseResponse> createRoom(dynamic params) => _client.createRoom(params);

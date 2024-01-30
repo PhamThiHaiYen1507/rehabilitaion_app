@@ -2,6 +2,7 @@ import 'package:commons/commons.dart';
 import 'package:finplus/layers/domain/entities/message_model.dart';
 import 'package:finplus/layers/domain/entities/room_model.dart';
 import 'package:finplus/layers/domain/repository/chat_repository.dart';
+import 'package:finplus/utils/app_logger.dart';
 import 'package:flutter/material.dart';
 
 class MessagesController extends GetxController {
@@ -47,7 +48,7 @@ class MessagesController extends GetxController {
     //       .disableAutoConnect()
     //       .setQuery({
     //         'token': StorageLocal.get(KEY.TOKEN),
-    //         'userId': UserStorageHelper.userData?.sId,
+    //         'userId': UserStorageHelper.userData?.id,
     //       })
     //       .setAuth({'token': StorageLocal.get(KEY.TOKEN)})
     //       .enableForceNewConnection()
@@ -60,7 +61,7 @@ class MessagesController extends GetxController {
     // add(MessagesBlocGetMessages());
 
     // _debouncer = Debouncer();
-
+    logD(roomId);
     messageInputFocusNode = FocusNode();
 
     messageInput = TextEditingController();
@@ -149,16 +150,16 @@ class MessagesController extends GetxController {
   }
 
   Future<void> _loadMessages() async {
-    // final res = await _chatRepository.getMessages(id: roomId, page: page);
+    final res = await _chatRepository.getMessages(roomId: roomId);
 
-    // res.map((right) {
-    //   page++;
-    //   if (right != null) {
-    //     _handleResponseMessageData(right);
+    res.map((right) {
+      page++;
+      if (right != null) {
+        _handleResponseMessageData(right);
 
-    //     hasMore = right.length >= 20;
-    //   }
-    // });
+        hasMore = right.length >= 20;
+      }
+    });
   }
 
   void _handleResponseMessageData(List<MessageModel> value) {
@@ -169,7 +170,7 @@ class MessagesController extends GetxController {
     final oldMessage = [...messages];
 
     value.forEach((e) {
-      oldMessage.removeWhere((element) => element.sId == e.sId);
+      oldMessage.removeWhere((element) => element.id == e.id);
     });
 
     data.addAll([...oldMessage, ...value]);
@@ -266,10 +267,10 @@ class MessagesController extends GetxController {
   //   emit(state.copyWith(
   //       messages: [newMessage, ...state.messages], showAttachSelection: false));
 
-  //   final sendingInfo = BackgroundUploader().getSendingMessage(newMessage.sId);
+  //   final sendingInfo = BackgroundUploader().getSendingMessage(newMessage.id);
 
   //   if (sendingInfo != null) {
-  //     add(SendingMessagesEvent(sendingInfo, newMessage.sId));
+  //     add(SendingMessagesEvent(sendingInfo, newMessage.id));
   //   }
   // }
 
@@ -279,7 +280,7 @@ class MessagesController extends GetxController {
 
   //   final message = await event.info.message.future;
 
-  //   prev.removeWhere((element) => element.sId == event.sendingId);
+  //   prev.removeWhere((element) => element.id == event.sendingId);
 
   //   if (message != null) {
   //     emit(state.copyWith(messages: [message, ...prev]));

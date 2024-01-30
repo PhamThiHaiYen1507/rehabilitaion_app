@@ -7,7 +7,7 @@ part of 'message_model.dart';
 // **************************************************************************
 
 MessageModel _$MessageModelFromJson(Map<String, dynamic> json) => MessageModel(
-      sId: json['sId'] as String,
+      id: json['id'] as int,
       roomId: json['roomId'] as String,
       createdAt: DateTime.parse(json['createdAt'] as String),
       updatedAt: json['updatedAt'] == null
@@ -27,7 +27,7 @@ MessageModel _$MessageModelFromJson(Map<String, dynamic> json) => MessageModel(
 
 Map<String, dynamic> _$MessageModelToJson(MessageModel instance) =>
     <String, dynamic>{
-      'sId': instance.sId,
+      'id': instance.id,
       'roomId': instance.roomId,
       'createdAt': instance.createdAt.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String(),
