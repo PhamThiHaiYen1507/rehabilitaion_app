@@ -1,11 +1,17 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:commons/commons.dart';
 import 'package:either_dart/either.dart';
 import 'package:finplus/layers/domain/entities/message_model.dart';
 import 'package:finplus/layers/domain/entities/room_model.dart';
 import 'package:finplus/layers/domain/entities/user_model.dart';
 import 'package:finplus/layers/domain/repository/chat_repository.dart';
+import 'package:finplus/layers/presentation/calling/calling.dart';
 import 'package:finplus/utils/types.dart';
 import 'package:flutter/material.dart';
+import 'package:stomp_dart_client/stomp.dart';
+import 'package:stomp_dart_client/stomp_config.dart';
 
 class MessagesController extends GetxController {
   final int roomId;
@@ -37,6 +43,20 @@ class MessagesController extends GetxController {
 
   bool hasMore = true;
 
+  final Completer _completer = Completer();
+
+  late final StompClient client = StompClient(
+      config: StompConfig.sockJS(
+    url: 'https://rehab.serveo.net/ws',
+    onConnect: (p0) {
+      print('connected');
+      _completer.complete();
+    },
+    onWebSocketError: (p0) {
+      print(p0);
+    },
+  ));
+
   MessagesController(
     this._chatRepository,
     this.roomId,
@@ -47,6 +67,7 @@ class MessagesController extends GetxController {
     messageInputFocusNode = FocusNode();
 
     messageInput = TextEditingController();
+
     super.onInit();
   }
 
@@ -57,6 +78,17 @@ class MessagesController extends GetxController {
     });
 
     _loadMessages();
+
+    client.activate();
+
+    await _completer.future;
+
+    client.subscribe(
+      destination: '/topic/public',
+      callback: (p0) {
+        _receivedNewMessage(json.decode(p0.body ?? json.encode({})));
+      },
+    );
 
     super.onReady();
   }
@@ -72,6 +104,25 @@ class MessagesController extends GetxController {
         hasMore = right.length >= 20;
       }
     });
+  }
+
+  void _receivedNewMessage(Map<String, dynamic> value) {
+    switch (value['type']) {
+      case 'CHAT':
+        final newMessage = MessageModel.fromJson(value['data']);
+
+        if (newMessage.isDoctor == user?.isDoctor) {
+          _messages.update((val) {
+            val?.insert(0, newMessage);
+          });
+        }
+        break;
+      case 'CALL':
+        Get.to(() => const Calling());
+        break;
+
+      default:
+    }
   }
 
   void _handleResponseMessageData(List<MessageModel> value) {
@@ -106,9 +157,29 @@ class MessagesController extends GetxController {
       if (right != null) {
         _messages.update((val) {
           val?.insert(0, right);
+          _sendMessageToSocket(right);
         });
       }
     });
+  }
+
+  void _sendMessageToSocket(MessageModel message) {
+    _send('CHAT', {
+      ...message.toJson(),
+      ...{'isDoctor': user?.isDoctor ?? true},
+    });
+  }
+
+  void startCall() {
+    _send('CALL', {});
+  }
+
+  void _send(String type, Map<String, dynamic> data) {
+    client.send(
+      destination: '/topic/public',
+      body: json.encode({'type': type, 'data': data}),
+      headers: {'content-type': 'application/json'},
+    );
   }
 
   @override

@@ -82,7 +82,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                           () => Text(
                             c.roomInfo?.name ?? '',
                             style: TextStyle(
-                              color: theme.neutral10,
+                              color: theme.neutral00,
                               fontSize: 14,
                               height: 1.5,
                               fontWeight: FontWeight.w600,
@@ -92,16 +92,13 @@ class _MessagesScreenState extends State<MessagesScreen> {
                         Container(
                             padding: const EdgeInsets.symmetric(horizontal: 8),
                             child: GestureDetector(
-                              onTap: () {},
+                              onTap: c.startCall,
                               child: Icon(Icons.phone, color: theme.neutral10),
                             )),
                         Container(
-
-                            // Set the desired width of the IconButton
-
                             padding: const EdgeInsets.symmetric(horizontal: 5),
                             child: GestureDetector(
-                              onTap: () {},
+                              onTap: c.startCall,
                               child: Icon(Icons.video_call,
                                   color: theme.neutral10),
                             )),
@@ -138,7 +135,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                         final previousMessage =
                             i - 1 >= 0 ? c.messages[i - 1] : null;
 
-                        if (message.isDoctor != c.user?.isDoctor)
+                        if (!(message.isDoctor == c.user?.isDoctor))
                           return Align(
                             alignment: Alignment.centerLeft,
                             child: WidgetSelectionOverlay(
@@ -243,57 +240,6 @@ class _MessagesScreenState extends State<MessagesScreen> {
               )
             ],
           ),
-          // bottomNavigationBar:
-          //     Consumer<ScreenHeight>(builder: (context, res, child) {
-          //   bloc.setKeyboardHeight(res.keyboardHeight);
-
-          //   return KeyboardVisibilityBuilder(
-          //       builder: (context, isKeyboardVisible) {
-          //     bloc.add(KeyboardShowMessagesEvent(isKeyboardVisible));
-
-          //     return bloc.builder(
-          //       buildWhen: (previous, current) =>
-          //           previous.visibleSticker != current.visibleSticker,
-          //       builder: (context, state) {
-          //         final keyboardHeight = StorageLocal.get(KEY.KEYBOARD_HEIGHT);
-
-          //         final realHeight =
-          //             keyboardHeight != 0 && keyboardHeight != null
-          //                 ? keyboardHeight
-          //                 : 250.0;
-
-          //         return AnimatedWidgetVisible(
-          //           duration: const Duration(milliseconds: 100),
-          //           visible: state.visibleSticker,
-          //           builder: () => SizedBox(
-          //             height: realHeight,
-          //             child: bloc.builder(
-          //               buildWhen: (previous, current) =>
-          //                   previous.isSendSticker != current.isSendSticker,
-          //               builder: (context, state) => AnimatedWidgetVisible(
-          //                 duration: const Duration(milliseconds: 100),
-          //                 visible: state.isSendSticker,
-          //                 builder: () => SizedBox(
-          //                   height: realHeight,
-          //                   child: BlocBuilder<HomeCubit, HomeState>(
-          //                     buildWhen: (previous, current) =>
-          //                         previous.stickers != current.stickers,
-          //                     builder: (context, state) => StickerPopup(
-          //                       stickers: state.stickers,
-          //                       isScroll: true,
-          //                       onSelectedSticker: (stickerPath) => bloc
-          //                           .add(SendStickerMessageEvent(stickerPath)),
-          //                     ),
-          //                   ),
-          //                 ),
-          //               ),
-          //             ),
-          //           ),
-          //         );
-          //       },
-          //     );
-          //   });
-          // }),
           floatingActionButton: ValueListenableBuilder(
             valueListenable: _showScrollToStartNotifier,
             builder: (context, value, child) => value

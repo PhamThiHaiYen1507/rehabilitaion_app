@@ -1,6 +1,7 @@
 import 'package:commons/commons.dart';
 import 'package:finplus/constant/assets.gen.dart';
 import 'package:finplus/layers/presentation/chat_room/index.dart';
+import 'package:finplus/screens/Home/index.dart';
 import 'package:finplus/styles/styles.dart';
 import 'package:flutter/material.dart';
 
@@ -57,6 +58,8 @@ class Home extends StatelessWidget {
 
   Widget _getBody(int index) {
     switch (index) {
+      case 3:
+        return const HomePage();
       case 2:
         return const ChatRoom();
 
