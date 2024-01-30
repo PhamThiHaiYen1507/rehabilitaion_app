@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:commons/commons.dart';
 import 'package:either_dart/either.dart';
@@ -102,45 +101,15 @@ class ChatRepositoryImpl extends ChatRepository {
 
   @override
   Future<ApiResponseData<MessageModel>> sendMessage(
-    String roomId,
+    int roomId,
     String? content, {
-    File? image,
-    File? audio,
-    String? sticker,
-    String? locationName,
+    bool? isDoctor,
   }) async {
     try {
-      Map<String, dynamic>? fileInfo;
-
-      // if (image != null) {
-      //   await _fileProvider
-      //       .createFileFromPath(image, 'users/$roomId/posts')
-      //       .then((value) {
-      //     fileInfo = value.toJson();
-      //   });
-      // }
-
-      // if (audio != null) {
-      //   await _fileProvider
-      //       .createFileFromPath(audio, 'users/$roomId/posts')
-      //       .then((value) {
-      //     fileInfo = value.toJson();
-      //   });
-      // }
-
-      // if (sticker != null) {
-      //   fileInfo = {'post_file_path': sticker};
-      // }
-
       final res = await _client.sendMessage(SendMessageRequest(
-        roomId: roomId,
-        content: content,
-        fileMain: fileInfo,
-        fileTypes: [
-          if (fileInfo != null && sticker != null) 'sticker',
-          if (fileInfo != null && audio != null) 'audio',
-          if (fileInfo != null && image != null) 'image',
-        ],
+        content: content ?? '',
+        isDoctor: isDoctor ?? false,
+        chatRoom: {'id': roomId},
       ));
 
       final data = res.getBody(MessageData.fromJson);

@@ -11,7 +11,7 @@ class VideoMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (message.fileMain == null) return const SizedBox();
+    // if (message.fileMain == null) return const SizedBox();
 
     return Container(
       margin: EdgeInsets.only(

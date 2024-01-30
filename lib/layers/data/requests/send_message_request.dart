@@ -4,39 +4,20 @@ part 'send_message_request.g.dart';
 
 @JsonSerializable()
 class SendMessageRequest {
-  @JsonKey(name: 'being_posted_user_id')
-  final String roomId;
+  final Map<String, dynamic> chatRoom;
 
-  @JsonKey(name: 'post_content')
-  String? content;
+  final String content;
 
-  @JsonKey(name: 'post_plugins')
-  List<String?> fileTypes;
-
-  final List fileList;
-
-  @JsonKey(name: 'file_main')
-  final Map<String, dynamic>? fileMain;
-
-  @JsonKey(name: 'post_place')
-  final Map<String, dynamic>? messagePlace;
+  final bool isDoctor;
 
   SendMessageRequest({
-    required this.roomId,
+    required this.chatRoom,
     required this.content,
-    this.fileMain,
-    this.fileList = const [],
-    this.fileTypes = const [],
-    this.messagePlace,
+    required this.isDoctor,
   });
 
   factory SendMessageRequest.fromJson(Map<String, dynamic> json) =>
       _$SendMessageRequestFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-        ..._$SendMessageRequestToJson(this),
-        'ref_type': 'message',
-        'post_privacy': 'public',
-        'feed_type': 'normal',
-      };
+  Map<String, dynamic> toJson() => _$SendMessageRequestToJson(this);
 }

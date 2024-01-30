@@ -1,11 +1,6 @@
 import 'package:finplus/layers/domain/entities/message_model.dart';
 import 'package:flutter/material.dart';
 
-import 'audio_message.dart';
-import 'single_image_message.dart';
-import 'sticker_message.dart';
-import 'video_message.dart';
-
 class FriendMessage extends StatelessWidget {
   final MessageModel message;
 
@@ -25,7 +20,7 @@ class FriendMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isSameUser = message.userId == nextMessage?.userId;
+    final isSameUser = message.isDoctor == nextMessage?.isDoctor;
 
     return Container(
       padding:
@@ -50,19 +45,20 @@ class FriendMessage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                if (!message.isContentEmpty)
+                if (message.content.isNotEmpty)
                   Container(
                     padding:
                         const EdgeInsets.all(10).copyWith(top: 8, bottom: 8),
                     decoration: BoxDecoration(
-                      // color: AppColors.light_grey,
+                      color: const Color(0xffF7F7F7),
                       borderRadius: BorderRadius.only(
                         topRight: const Radius.circular(15),
                         bottomRight: const Radius.circular(15),
                         topLeft: Radius.circular(isSameUser ? 5 : 15),
                         bottomLeft: Radius.circular(previousMessage == null ||
                                 (previousMessage != null &&
-                                    message.userId != previousMessage?.userId)
+                                    message.isDoctor !=
+                                        previousMessage?.isDoctor)
                             ? 15
                             : 5),
                       ),
@@ -74,7 +70,7 @@ class FriendMessage extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Flexible(
-                              child: Text(message.message),
+                              child: Text(message.content),
                             ),
                             // const SizedBox(width: 4),
                             // Text(
@@ -97,26 +93,26 @@ class FriendMessage extends StatelessWidget {
                       ],
                     ),
                   ),
-                if (message.files.isNotEmpty && message.isImage)
-                  SingleImageMessage(
-                    message: message,
-                    alignment: Alignment.centerLeft,
-                  ),
-                if (message.isSticker && message.files.isNotEmpty)
-                  StickerMessage(
-                    message: message,
-                    alignment: Alignment.centerLeft,
-                  ),
-                if (message.files.isNotEmpty && message.isAudio)
-                  AudioMessage(
-                    message: message,
-                    alignment: Alignment.centerLeft,
-                  ),
-                if (message.isVideo)
-                  VideoMessage(
-                    message: message,
-                    alignment: Alignment.centerLeft,
-                  ),
+                // if (message.files.isNotEmpty && message.isImage)
+                //   SingleImageMessage(
+                //     message: message,
+                //     alignment: Alignment.centerLeft,
+                //   ),
+                // if (message.isSticker && message.files.isNotEmpty)
+                //   StickerMessage(
+                //     message: message,
+                //     alignment: Alignment.centerLeft,
+                //   ),
+                // if (message.files.isNotEmpty && message.isAudio)
+                //   AudioMessage(
+                //     message: message,
+                //     alignment: Alignment.centerLeft,
+                //   ),
+                // if (message.isVideo)
+                //   VideoMessage(
+                //     message: message,
+                //     alignment: Alignment.centerLeft,
+                //   ),
               ],
             ),
           ),

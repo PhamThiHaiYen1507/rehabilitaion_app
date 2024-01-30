@@ -1,5 +1,3 @@
-// ignore_for_file: deprecated_member_use
-
 import 'dart:async';
 
 import 'package:commons/commons.dart';
@@ -7,7 +5,6 @@ import 'package:finplus/layers/data/repository/chat_repository_impl.dart';
 import 'package:finplus/layers/presentation/messages/controller/messages_controller.dart';
 import 'package:finplus/layers/presentation/widgets/selection_overlay/selection_overlay.dart';
 import 'package:finplus/styles/styles.dart';
-import 'package:finplus/utils/svg.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'attach_selection_widget.dart';
@@ -141,21 +138,21 @@ class _MessagesScreenState extends State<MessagesScreen> {
                         final previousMessage =
                             i - 1 >= 0 ? c.messages[i - 1] : null;
 
-                        //if (message.userId != userId)
-                        return Align(
-                          alignment: Alignment.centerLeft,
-                          child: WidgetSelectionOverlay(
-                            onLeft: true,
-                            option: const MessageOption(),
-                            optionHeight: 170,
-                            child: FriendMessage(
-                              nextMessage: nextMessage,
-                              previousMessage: previousMessage,
-                              message: message,
-                              // showAvatar: c.roomInfo?.isGroup == true,
+                        if (message.isDoctor != c.user?.isDoctor)
+                          return Align(
+                            alignment: Alignment.centerLeft,
+                            child: WidgetSelectionOverlay(
+                              onLeft: true,
+                              option: const MessageOption(),
+                              optionHeight: 170,
+                              child: FriendMessage(
+                                nextMessage: nextMessage,
+                                previousMessage: previousMessage,
+                                message: message,
+                                // showAvatar: c.roomInfo?.isGroup == true,
+                              ),
                             ),
-                          ),
-                        );
+                          );
 
                         return Align(
                           alignment: Alignment.centerRight,
@@ -184,116 +181,63 @@ class _MessagesScreenState extends State<MessagesScreen> {
                   )
                 ]),
                 child: SafeArea(
-                  child: Column(
-                    children: [
-                      ValueListenableBuilder(
-                        valueListenable: _recordNotifier,
-                        builder: (context, isRecording, child) {
-                          return Row(
-                            children: [
-                              if (!isRecording) ...[
-                                SizedBox.square(
-                                  dimension: 36,
-                                  child: IconButton(
-                                    padding: EdgeInsets.zero,
-                                    onPressed: _showAttachSelection,
-                                    icon: Container(
-                                      padding: const EdgeInsets.all(5),
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        // color: AppColors.blue_core,
-                                      ),
-                                      // child: SvgPicture.asset(
-                                      //   SvgIcon.plus.path,
-                                      //   color: Colors.white,
-                                      // ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox.square(
-                                  dimension: 36,
-                                  // child: IconButton(
-                                  //   padding: const EdgeInsets.all(9),
-                                  //   onPressed: () =>
-                                  //       bloc.add(SelectImageMessagesEvent()),
-                                  //   icon: SvgPicture.asset(
-                                  //       SvgIcon.add_image.path),
-                                  // ),
-                                )
-                              ] else
-                                const SizedBox.square(
-                                  dimension: 36,
-                                  // child: IconButton(
-                                  //   padding: EdgeInsets.zero,
-                                  //   onPressed: () => _stopRecord(true),
-                                  //   icon: Container(
-                                  //     padding: const EdgeInsets.all(2),
-                                  //     decoration: const BoxDecoration(
-                                  //       shape: BoxShape.circle,
-                                  //       color: AppColors.blue_core,
-                                  //     ),
-                                  //     child: SvgPicture.asset(
-                                  //       SvgIcon.close.path,
-                                  //       color: Colors.white,
-                                  //       width: 14,
-                                  //       height: 14,
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                ),
-                              Expanded(
-                                child: AnimatedSize(
-                                  duration: const Duration(milliseconds: 200),
-                                  child: Container(
-                                    decoration: const BoxDecoration(
+                  top: false,
+                  child: ValueListenableBuilder(
+                    valueListenable: _recordNotifier,
+                    builder: (context, isRecording, child) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: AnimatedSize(
+                                duration: const Duration(milliseconds: 200),
+                                child: TextField(
+                                  onTap: () {},
+                                  controller: c.messageInput,
+                                  maxLines: 3,
+                                  minLines: 1,
+                                  decoration: const InputDecoration(
+                                    isDense: true,
+                                    hintText: 'Message...',
+                                    contentPadding: EdgeInsets.symmetric(
+                                        horizontal: 8, vertical: 10),
+                                    border: OutlineInputBorder(
                                       borderRadius:
-                                          BorderRadius.all(Radius.circular(15)),
-                                      // color: AppColors.ultra_light_grey,
+                                          BorderRadius.all(Radius.circular(36)),
+                                      borderSide: BorderSide(color: primary05),
                                     ),
-                                    child: TextField(
-                                      onTap: () {},
-                                      controller: c.messageInput,
-                                      maxLines: 3,
-                                      minLines: 1,
-                                      decoration: const InputDecoration(
-                                        isDense: true,
-                                        hintText: 'Message...',
-                                        // hintStyle: TextDefine.P3_R.copyWith(
-                                        //     color: AppColors.mac_grey),
-                                        contentPadding: EdgeInsets.symmetric(
-                                            horizontal: 8, vertical: 10),
-                                        border: OutlineInputBorder(
-                                          borderSide: BorderSide.none,
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(15)),
-                                        ),
-                                        suffixIconConstraints:
-                                            BoxConstraints(maxHeight: 36),
-                                        // suffixIcon: IconButton(
-                                        //   padding: const EdgeInsets.all(8),
-                                        //   onPressed: () => bloc.add(
-                                        //       ToggleSendStickerMessagesEvent()),
-                                        //   icon: SvgPicture.asset(
-                                        //       SvgIcon.sticker.path),
-                                        // ),
-                                      ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(36)),
+                                      borderSide: BorderSide(color: primary05),
                                     ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(36)),
+                                      borderSide: BorderSide(color: primary05),
+                                    ),
+                                    suffixIconConstraints:
+                                        BoxConstraints(maxHeight: 36),
                                   ),
                                 ),
                               ),
-                              SizedBox.square(
-                                dimension: 44,
-                                child: IconButton(
-                                  padding: const EdgeInsets.all(12),
-                                  onPressed: c.sendMessage,
-                                  icon: SvgPicture.asset(SvgIcon.cancle),
+                            ),
+                            SizedBox.square(
+                              dimension: 44,
+                              child: IconButton(
+                                padding: const EdgeInsets.all(12),
+                                onPressed: c.sendMessage,
+                                icon: const Icon(
+                                  Icons.send,
+                                  color: primary05,
                                 ),
-                              )
-                            ],
-                          );
-                        },
-                      ),
-                    ],
+                              ),
+                            )
+                          ],
+                        ),
+                      );
+                    },
                   ),
                 ),
               )

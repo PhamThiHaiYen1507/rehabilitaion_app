@@ -1,8 +1,10 @@
 import 'package:commons/commons.dart';
+import 'package:either_dart/either.dart';
 import 'package:finplus/layers/domain/entities/message_model.dart';
 import 'package:finplus/layers/domain/entities/room_model.dart';
+import 'package:finplus/layers/domain/entities/user_model.dart';
 import 'package:finplus/layers/domain/repository/chat_repository.dart';
-import 'package:finplus/utils/app_logger.dart';
+import 'package:finplus/utils/types.dart';
 import 'package:flutter/material.dart';
 
 class MessagesController extends GetxController {
@@ -26,6 +28,11 @@ class MessagesController extends GetxController {
 
   RoomModel? get roomInfo => _roomInfo.value;
 
+  final Rx<UserModel?> _user =
+      Rx(Storage.get(KEY.LOGIN_DATA, UserModel.fromJson));
+
+  UserModel? get user => _user.value;
+
   int page = 1;
 
   bool hasMore = true;
@@ -33,35 +40,10 @@ class MessagesController extends GetxController {
   MessagesController(
     this._chatRepository,
     this.roomId,
-  ) : super() {
-    // _messages = Rx(BackgroundUploader().getSendingMessageWithRoomId(roomId));
-  }
+  );
 
   @override
   Future<void> onInit() async {
-    // _record = Record();
-
-    // _socket = io(
-    //   '${AppConfig.chatSocketUrl}/conversation',
-    //   OptionBuilder()
-    //       .setTransports(['websocket'])
-    //       .disableAutoConnect()
-    //       .setQuery({
-    //         'token': StorageLocal.get(KEY.TOKEN),
-    //         'userId': UserStorageHelper.userData?.id,
-    //       })
-    //       .setAuth({'token': StorageLocal.get(KEY.TOKEN)})
-    //       .enableForceNewConnection()
-    //       .enableForceNew()
-    //       .build(),
-    // );
-
-    // add(MessagesBlocGetRoomInfo());
-
-    // add(MessagesBlocGetMessages());
-
-    // _debouncer = Debouncer();
-    logD(roomId);
     messageInputFocusNode = FocusNode();
 
     messageInput = TextEditingController();
@@ -70,83 +52,13 @@ class MessagesController extends GetxController {
 
   @override
   Future<void> onReady() async {
-    // _socket.connect();
-
-    // _socket.onConnect((data) {
-    //   logD('Connected room: $roomId');
-    //   _askDispatchActions(
-    //       'conversations/join-room', {'conversationId': roomId});
-    // });
-
-    // _socket.onError((data) {
-    //   logE('Message socket connect error: $data');
-    // });
-
-    // // _socket.on('new_message_in_room', _onNewMessage);
-    // _socket.on('conversation/new_message_in_room', _onNewMessage);
-
     messageInputFocusNode.addListener(() {
       _hasFocus(messageInputFocusNode.hasFocus);
     });
 
-    _loadRoomInfo();
-
     _loadMessages();
 
     super.onReady();
-  }
-
-  // @override
-  // void registerEvent() {
-  //   on(_loadRoomInfo);
-
-  //   on(_loadMessages);
-
-  //   on(_onSendMessage);
-
-  //   on(_receivedMessage);
-
-  //   on(_onSelectImage);
-
-  //   on(_updateOrAddMessage);
-
-  //   on(_toggleSendSticker);
-
-  //   on(_toggleHasFocus);
-
-  //   on(_onSendSticker);
-
-  //   on(_onKeyboardVisible);
-
-  //   on(_onShowStickerBoard);
-
-  //   on(_onSaveRecord);
-
-  //   on(_onSelectVideo);
-
-  //   on(_onSelectAudio);
-
-  //   on(_onSelectDocument);
-
-  //   on(_onSendSuccessMessage);
-
-  //   on(_onSaveShowAttachSelection);
-
-  //   on(_sendFileBackgroundMessage);
-
-  //   on(_onSelectCurrentLocation);
-
-  //   on(_onSelectLocation);
-  // }
-
-  Future<void> _loadRoomInfo() async {
-    // if (state.roomInfo == null) {
-    //   final res = await _chatRepository.findRoomById(roomId);
-
-    //   res.map((right) {
-    //     emit(state.copyWith(roomInfo: right));
-    //   });
-    // }
   }
 
   Future<void> _loadMessages() async {
@@ -183,151 +95,21 @@ class MessagesController extends GetxController {
       final content = messageInput.text;
       messageInput.clear();
 
-      // _onSendMessage(content: content);
+      _onSendMessage(content: content);
     }
   }
 
-  // Future<void> _onSendMessage({
-  //   final String? content,
-  //   final File? image,
-  //   final File? audio,
-  //   final String? sticker,
-  // }) async {
-  //   // final res = await _chatRepository.sendMessage(
-  //   //   roomId,
-  //   //   content,
-  //   //   image: image,
-  //   //   audio: audio,
-  //   //   sticker: sticker,
-  //   // );
+  void _onSendMessage({String? content}) {
+    final res = _chatRepository.sendMessage(roomId, content);
 
-  //   // res.map((right) {
-  //   //   if (right != null) {
-  //   //     _handleResponseMessageData([right]);
-  //   //   }
-  //   // });
-  // }
-
-  // Future<void> _onSendSticker(
-  //     SendStickerMessageEvent event, MessagesEmitter emit) async {
-  //   add(SendMessageEvent(roomId: roomId, sticker: event.filePath));
-  // }
-
-  // Future<void> _onSelectImage(
-  //     SelectImageMessagesEvent event, MessagesEmitter emit) async {
-  //   final file = await pickImage();
-
-  //   if (file != null) {
-  //     add(SendFileBackgroundMessagesEvent(file, 'image'));
-  //   }
-  // }
-
-  // Future<void> _onSelectVideo(
-  //     SelectVideoMessagesEvent event, MessagesEmitter emit) async {
-  //   final file = await pickVideoFromGallery();
-
-  //   if (file != null) {
-  //     add(SendFileBackgroundMessagesEvent(file, 'video'));
-  //   }
-  // }
-
-  // Future<void> _onSelectAudio(
-  //     SelectAudioMessagesEvent event, MessagesEmitter emit) async {
-  //   final files = await pickFile(FileType.audio);
-
-  //   final file = files?.firstOrNull;
-
-  //   if (file != null) {
-  //     add(SendFileBackgroundMessagesEvent(file, 'audio'));
-  //   }
-  // }
-
-  // Future<void> _onSelectDocument(
-  //     SelectDocumentMessagesEvent event, MessagesEmitter emit) async {
-  //   final files = await pickFile(FileType.any);
-
-  //   final file = files?.firstOrNull;
-
-  //   if (file != null) {
-  //     add(SendFileBackgroundMessagesEvent(
-  //         file, Utils.getFileType(file.path) ?? 'file'));
-  //   }
-  // }
-
-  // void _sendFileBackgroundMessage(
-  //     SendFileBackgroundMessagesEvent event, MessagesEmitter emit) {
-  //   final newMessage = BackgroundUploader().startSendMessageWithFile(
-  //     roomId,
-  //     null,
-  //     event.file,
-  //     'users/$roomId/posts',
-  //     event.fileType,
-  //   );
-
-  //   emit(state.copyWith(
-  //       messages: [newMessage, ...state.messages], showAttachSelection: false));
-
-  //   final sendingInfo = BackgroundUploader().getSendingMessage(newMessage.id);
-
-  //   if (sendingInfo != null) {
-  //     add(SendingMessagesEvent(sendingInfo, newMessage.id));
-  //   }
-  // }
-
-  // Future<void> _onSendSuccessMessage(
-  //     SendingMessagesEvent event, MessagesEmitter emit) async {
-  //   final prev = [...state.messages];
-
-  //   final message = await event.info.message.future;
-
-  //   prev.removeWhere((element) => element.id == event.sendingId);
-
-  //   if (message != null) {
-  //     emit(state.copyWith(messages: [message, ...prev]));
-  //   }
-  // }
-
-  // Future<void> _toggleSendSticker(
-  //     ToggleSendStickerMessagesEvent event, MessagesEmitter emit) async {
-  //   if (!state.isSendSticker) {
-  //     SystemChannels.textInput.invokeMethod('TextInput.hide');
-  //   } else if (messageInputFocusNode.hasFocus) {
-  //     SystemChannels.textInput.invokeMethod('TextInput.show');
-  //   }
-
-  //   emit(state.copyWith(isSendSticker: !state.isSendSticker));
-
-  //   _debouncer.debouncing(
-  //     fn: () => add(StickerShowMessagesEvent(visibleSticker)),
-  //     waitForMs: 100,
-  //   );
-  // }
-
-  // void _onKeyboardVisible(
-  //     KeyboardShowMessagesEvent event, MessagesEmitter emit) {
-  //   emit(state.copyWith(isKeyboardVisible: event.isKeyboardVisible));
-
-  //   _debouncer.debouncing(
-  //     fn: () => add(StickerShowMessagesEvent(visibleSticker)),
-  //     waitForMs: 100,
-  //   );
-  // }
-
-  // void _onShowStickerBoard(
-  //     StickerShowMessagesEvent event, MessagesEmitter emit) {
-  //   emit(state.copyWith(visibleSticker: event.isShow));
-  // }
-
-  // void _onSaveRecord(SaveRecordAudioMessagesEvent event, MessagesEmitter emit) {
-  //   if (event.audio != null) {
-  //     add(SendFileBackgroundMessagesEvent(event.audio!, 'audio'));
-  //   }
-  // }
-
-  // void _onSaveShowAttachSelection(
-  //     ShowAttachSelectionMessagesEvent event, MessagesEmitter emit) {
-  //   emit(state.copyWith(showAttachSelection: event.show));
-  // }
+    res.mapRight((right) {
+      if (right != null) {
+        _messages.update((val) {
+          val?.insert(0, right);
+        });
+      }
+    });
+  }
 
   @override
   void onClose() {

@@ -42,7 +42,7 @@ abstract class ApiClient {
     @Query('time') String time,
   );
 
-  @POST('/api/posts')
+  @POST('/api/v1/chatDetail')
   Future<BaseResponse> sendMessage(@Body() SendMessageRequest request);
 }
 

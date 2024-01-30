@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:finplus/core/utils/background_uploader/background_uploader.dart';
 import 'package:finplus/layers/domain/entities/message_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -17,9 +16,9 @@ class _SendingMessageState extends State<SendingMessage> {
   StreamController<num>? streamController;
   @override
   void initState() {
-    streamController = BackgroundUploader()
-        .getSendingMessage(widget.messsage.id.toString())
-        ?.stream;
+    // streamController = BackgroundUploader()
+    //     .getSendingMessage(widget.messsage.id.toString())
+    //     ?.stream;
 
     super.initState();
   }

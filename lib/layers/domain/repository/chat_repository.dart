@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import '../../../core/typedef/typedef.dart';
 import '../entities/message_model.dart';
@@ -23,12 +22,9 @@ abstract class ChatRepository {
       {required String id, required DateTime time});
 
   Future<ApiResponseData<MessageModel>> sendMessage(
-    String roomId,
+    int roomId,
     String? content, {
-    File? image,
-    File? audio,
-    String? sticker,
-    String? locationName,
+    bool? isDoctor,
   });
 
   UserModel? getUserFromStorage();
